@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首頁</title>
+    <link rel = "stylesheet" href="static/css/base.css">
+</head>
+<body>
+    <h1>HomePage</h1>
+    <!-- 預定義函數 -->
+    <p>"這是title"的長度 =  {{len .title}}  </p>
+    <p>"subtitle"的長度 =  {{len .subtitle}}  </p>
+    <p>"這是"的長度 =  {{len .this}}  </p>
+
+    <br>
+    <!-- 自定義函數 -->
+     {{.date}}
+
+     <br>
+
+     {{UnixToTime .date}}
+
+     <br>
+
+     <!--可以使用變數帶入，也可以給個新的string-->
+     {{Printline .title "測試"}}
+</body>
+</html>

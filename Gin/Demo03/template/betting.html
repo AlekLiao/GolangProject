@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打碼量</title>
+</head>
+<body>
+    <h1>打碼量</h1>
+    <br/>
+
+    <!-- eq(equal)  A == B
+         ne(not equal)  A != B
+         lt(less than)  A < B
+         le(less&equal)  A <= B
+         gt(great than)  A > B
+         ge(great&equal)  A >= B
+     -->
+    {{if gt .betting 450}}
+    <p>very Good!</p>
+    {{else if gt .betting 300 }}
+    <p>Good!</p>
+    {{else if lt .betting 100}}
+    <p>Normal!</p>
+    {{end}}
+
+    <!-- 循環遍歷 -->
+    <ul>
+     {{range $key,$value := .people}}
+         <li>{{$key}}------{{$value}}</li>
+     {{end}}
+    </ul>
+    
+    <br>
+
+    <ul>
+        {{range $key,$value := .newPeople}}
+            <li>{{$key}}---{{$value.Title}}---{{$value.Content}}</li>
+        {{else}}
+            <li>無資料</li>
+        {{end}}
+    </ul>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--action 屬性规定在提交表单时将表单数据发送到何处。可以是一個URL、一個html page...等。本例用的是丟給指定的 function（doAddUser）-->
+    <!-- method 屬性區分 get、post。要傳送資料用post，從server 獲取資料用get-->
+    <form action="/doAddUser2" method="post">
+        用戶名：<input type="text" name = "username" /><br><br>
+        密碼：<input type="password" name = "password" /><br><br>
+        <!--年齡: <input type="number" name = "age" /><br><br> -->
+        <!--年齡: <input type="text" name = "age" /><br><br> -->
+
+        <input type = "submit" value="提交">
+    </form>
+</body>
+</html>
