@@ -1,0 +1,7 @@
+{
+    "ApkSrc":"https://apk.ccj0qjz8os.com/cai8.apk",
+    "IpaSrc":"itms-services://?action=download-manifest&url=https://update.etm4ucefpo.com/enterprise_cp8_x_btwo_240730_113000_resign.ipa.plist",
+    "ApkDst":"ccc.apk",
+    "IpaDst":"ppp.ipa",
+    "interval":"30"
+}
