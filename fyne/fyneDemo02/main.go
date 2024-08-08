@@ -45,41 +45,41 @@ func (e *CustomEntry) Disabled() bool {
 func main() {
 	myApp := app.New()
 	myApp.Settings().SetTheme(CustomTheme{Theme: theme.DefaultTheme()})
-	myWindow := myApp.NewWindow("組件對齊示例")
+	myWindow := myApp.NewWindow("App.自動下載測試器")
 
 	// 創建第一組組件
-	label1 := widget.NewLabel("名稱：")
-	entry1 := NewCustomEntry()
-	entry1.SetPlaceHolder("請選擇文件夾")
-	entry1.Disable() // 設置為只讀
-	button1 := widget.NewButton("選擇文件夾", func() {
+	lbl_DstPath := widget.NewLabel("App.本地路徑：")
+	edt_DstPath := NewCustomEntry()
+	edt_DstPath.SetPlaceHolder("請選擇文件夾")
+	edt_DstPath.Disable() // 設置為只讀
+	btn_SelLocalPath := widget.NewButton("Open...", func() {
 		folder := openFolderDialog()
 		if folder != "" {
-			entry1.SetText(folder)
-			entry1.Refresh()
+			edt_DstPath.SetText(folder)
+			edt_DstPath.Refresh()
 		}
 	})
 
 	// 創建第二組組件
-	label2 := widget.NewLabel("年齡：")
-	entry2 := widget.NewEntry()
-	entry2.SetPlaceHolder("請輸入年齡")
-	button2 := widget.NewButton("確認", func() {
-		entry2.SetText("")
-		entry2.SetPlaceHolder("請輸入年齡")
+	lbl_ipaSrcUrl := widget.NewLabel("ipa下載路徑：")
+	edt_ipaSrcUrl := widget.NewEntry()
+	edt_ipaSrcUrl.SetPlaceHolder("填入運維發佈的下載鏈接")
+	btn_ClearIpaSrcUrl := widget.NewButton("Clear", func() {
+		edt_ipaSrcUrl.SetText("")
+		edt_ipaSrcUrl.SetPlaceHolder("填入運維發佈的下載鏈接")
 	})
 
 	// 創建第三組組件
-	label3 := widget.NewLabel("職業：")
-	entry3 := widget.NewEntry()
-	entry3.SetPlaceHolder("請輸入職業")
-	button3 := widget.NewButton("保存", func() {
-		entry3.SetText("")
-		entry3.SetPlaceHolder("請輸入職業")
+	lbl_apkSrcUrl := widget.NewLabel("apk下載路徑：")
+	edt_apkSrcUrl := widget.NewEntry()
+	edt_apkSrcUrl.SetPlaceHolder("填入運維發佈的下載鏈接")
+	btn_ClearApkSrcUrl := widget.NewButton("Clear", func() {
+		edt_apkSrcUrl.SetText("")
+		edt_apkSrcUrl.SetPlaceHolder("填入運維發佈的下載鏈接")
 	})
 
 	// 創建第四組組件
-	label4 := widget.NewLabel("選擇：")
+	lbl_Interval := widget.NewLabel("下載測試間隔：")
 	options := []string{}
 	for i := 5; i <= 60; i += 5 {
 		options = append(options, strconv.Itoa(i))
@@ -96,11 +96,11 @@ func main() {
 		fmt.Println("異常提示音:", checked)
 	})
 	var selectedFile string
-	selectFileButton := widget.NewButton("選擇音頻", func() {
+	selectFileButton := widget.NewButton("選擇 .mp3", func() {
 		file := openFileDialog()
 		if file != "" {
 			selectedFile = file
-			fmt.Println("選擇的音頻文件:", selectedFile)
+			fmt.Println("選擇的mp3文件:", selectedFile)
 		}
 	})
 
@@ -114,17 +114,17 @@ func main() {
 		button.Resize(fyne.NewSize(buttonWidth, button.MinSize().Height))
 	}
 
-	setSize(label1, entry1, button1)
-	setSize(label2, entry2, button2)
-	setSize(label3, entry3, button3)
-	setSize(label4, select4, button4)
+	setSize(lbl_DstPath, edt_DstPath, btn_SelLocalPath)
+	setSize(lbl_ipaSrcUrl, edt_ipaSrcUrl, btn_ClearIpaSrcUrl)
+	setSize(lbl_apkSrcUrl, edt_apkSrcUrl, btn_ClearApkSrcUrl)
+	setSize(lbl_Interval, select4, button4)
 
 	// 創建自定義容器
 	customContainer := container.NewWithoutLayout(
-		label1, entry1, button1,
-		label2, entry2, button2,
-		label3, entry3, button3,
-		label4, select4, button4,
+		lbl_DstPath, edt_DstPath, btn_SelLocalPath,
+		lbl_ipaSrcUrl, edt_ipaSrcUrl, btn_ClearIpaSrcUrl,
+		lbl_apkSrcUrl, edt_apkSrcUrl, btn_ClearApkSrcUrl,
+		lbl_Interval, select4, button4,
 		checkbox, selectFileButton,
 	)
 	customContainer.Resize(fyne.NewSize(windowWidth, 220))
@@ -139,10 +139,10 @@ func main() {
 	}
 
 	// 設置四組組件位置
-	setPositions(label1, entry1, button1, 10)
-	setPositions(label2, entry2, button2, 50)
-	setPositions(label3, entry3, button3, 90)
-	setPositions(label4, select4, button4, 130)
+	setPositions(lbl_DstPath, edt_DstPath, btn_SelLocalPath, 10)
+	setPositions(lbl_ipaSrcUrl, edt_ipaSrcUrl, btn_ClearIpaSrcUrl, 50)
+	setPositions(lbl_apkSrcUrl, edt_apkSrcUrl, btn_ClearApkSrcUrl, 90)
+	setPositions(lbl_Interval, select4, button4, 130)
 
 	// 設置複選框和選擇文件按鈕的位置
 	checkbox.Resize(fyne.NewSize(120, checkbox.MinSize().Height))
@@ -210,11 +210,13 @@ func openFolderDialog() string {
 		cmd = exec.Command("zenity", "--file-selection", "--directory")
 	}
 
-	output, err := cmd.CombinedOutput()
+	//output, err := cmd.CombinedOutput()
+	output, err := cmd.Output()
 	if err != nil {
 		fmt.Println("Error:", err)
 		return ""
 	}
+	fmt.Println(string(output))
 
 	// 移除可能的 "OK" 後綴
 	folder := strings.TrimSpace(string(output))
